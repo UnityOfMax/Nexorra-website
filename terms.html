@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Purchase - Nexorra</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Tailwind CSS (via CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Manrope', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        nexorraBg: '#020617', /* Deepest Dark (Slate 950) */
+                        nexorraDark: '#0B1120', /* Dark Navy */
+                        nexorraLight: '#1e293b', /* Slate 800 */
+                        nexorraBlue: '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { background-color: #020617; color: #cbd5e1; }
+        
+        /* Glass effect for nav */
+        .glass-nav {
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Terms Typography */
+        h1, h2, h3 { color: white; font-family: 'Manrope', sans-serif; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; }
+        
+        /* Main Page Title */
+        h1 { 
+            font-size: 5rem; 
+            font-weight: 800; 
+            line-height: 1; 
+            text-align: center; 
+            margin-bottom: 2rem; /* Reduced bottom margin */
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        
+        /* Subtitle / Doc Info Styles */
+        .doc-info {
+            font-size: 1.5rem; /* Bigger text */
+            font-weight: 700;  /* Bold */
+            color: white;
+            text-align: center;
+            margin-bottom: 4rem; /* Space between this text and the box */
+            line-height: 1.4;
+        }
+
+        h2 { font-size: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; margin-top: 3rem; }
+        h3 { font-size: 1.25rem; color: #60a5fa; margin-top: 2rem; }
+        p, li { margin-bottom: 1rem; line-height: 1.7; color: #cbd5e1; }
+        ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+        strong { color: white; font-weight: 600; }
+        
+        /* Rich Background */
+        .rich-bg {
+            background: radial-gradient(circle at top right, #1e3a8a20, transparent 40%),
+                        radial-gradient(circle at bottom left, #17255410, transparent 40%),
+                        #020617;
+        }
+
+        /* Responsive Title for Mobile */
+        @media (max-width: 640px) {
+            h1 { font-size: 3rem; margin-bottom: 2rem; }
+            .doc-info { font-size: 1.2rem; margin-bottom: 2rem; }
+        }
+    </style>
+</head>
+<body class="rich-bg antialiased font-sans flex flex-col min-h-screen">
+
+    <!-- NAVIGATION MENU -->
+    <nav class="sticky top-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-24 items-center">
+                <!-- Logo / Brand Name - Links back to Home -->
+                <a href="index.html" class="flex-shrink-0 flex items-center group">
+                    <span style="font-family: 'Times New Roman', Times, serif; font-style: italic;" class="font-bold text-3xl tracking-tight text-white group-hover:text-blue-400 transition-colors">Nexorra</span>
+                </a>
+                
+                <!-- CTA -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <!-- Links back to Home Contact Section -->
+                    <a href="index.html#contact" class="bg-white text-nexorraBg px-6 py-3 rounded-full hover:bg-blue-50 transition-all duration-300 font-bold text-sm shadow-lg shadow-blue-900/20">
+                        Book a Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="flex-grow w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        
+        <h1>TERMS OF PURCHASE</h1>
+        
+        <!-- Document Info moved OUTSIDE and ABOVE the box -->
+        <div class="doc-info">
+            <p class="text-white">Nexorra Appointment Generation Services</p>
+            <p class="text-blue-400">Effective Date: March 12, 2023</p>
+        </div>
+        
+        <!-- Content Box -->
+        <div class="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl backdrop-blur-sm">
+            
+            <p>These Terms of Purchase (the "Agreement") constitute a legally binding agreement between Nexorra ("Company," "we," "us," or "our") and the purchasing party ("Client," "you," or "your") for the provision of appointment generation services for real estate professionals. By purchasing our services, you acknowledge that you have read, understood, and agree to be bound by these terms.</p>
+
+            <h2>1. SERVICES PROVIDED</h2>
+            <p>Nexorra provides appointment generation services designed to connect real estate agents with qualified prospects through targeted advertising and lead management systems. The specific scope of services, including the number of guaranteed appointments and closed deals, will be outlined in your individual Service Agreement or Order Form.</p>
+
+            <h2>2. PAYMENT TERMS</h2>
+            <ul>
+                <li>All fees are due and payable according to the payment schedule specified in your Service Agreement.</li>
+                <li>Client agrees to maintain valid payment information on file and authorizes Company to charge the payment method for all applicable fees.</li>
+                <li>Failed payments due to invalid or expired payment information shall be considered the Client's responsibility and may impact guarantee eligibility as specified in Section 3.</li>
+                <li>All fees are non-refundable except as expressly provided in the Performance Guarantee (Section 3).</li>
+            </ul>
+
+            <h2>3. PERFORMANCE GUARANTEE</h2>
+            
+            <h3>3.1 Guarantee Terms</h3>
+            <p>Company guarantees that if we fail to deliver the agreed number of closed deals within the first ninety (90) days of service commencement, all investment paid to Nexorra will be refunded to the Client plus an additional $6,000 cash payment, subject to the Client meeting all eligibility requirements set forth in Section 3.2.</p>
+
+            <h3>3.2 Eligibility Requirements</h3>
+            <p>To qualify for the Performance Guarantee refund, Client must satisfy ALL of the following conditions:</p>
+            
+            <p><strong>Professional Experience Requirements</strong></p>
+            <ul>
+                <li>Client must have been a licensed real estate agent for a minimum of ten (10) consecutive years at the time of service commencement.</li>
+                <li>Client must have closed a minimum of ten (10) real estate transactions per calendar year, consistently, for at least five (5) consecutive years immediately preceding service commencement.</li>
+            </ul>
+
+            <p><strong>Performance Requirements</strong></p>
+            <ul>
+                <li>Client must have closed fewer transactions than the minimum guaranteed amount during the ninety (90) day guarantee period.</li>
+                <li>Client must have personally spoken with every single prospect who attended a scheduled appointment during the guarantee period.</li>
+                <li>Client must have documented all conversations with prospects, including dates, times, outcomes, and follow-up actions taken. Such documentation must be provided to Company upon request.</li>
+            </ul>
+
+            <p><strong>Attendance and Availability Requirements</strong></p>
+            <ul>
+                <li>Client must have taken fewer than five (5) days off during the ninety (90) day guarantee period. "Days off" are defined as calendar days during which Client was unavailable to conduct real estate business activities or attend scheduled appointments.</li>
+            </ul>
+
+            <p><strong>Advertising Requirements</strong></p>
+            <ul>
+                <li>Company's advertising campaigns must have been actively running for a minimum of twenty-eight (28) days within each thirty (30) day period, calculated from the date of first payment.</li>
+                <li>Advertising interruptions caused by Client payment failures, expired payment methods, insufficient funds, or any other payment-related issues attributable to Client shall count toward the twenty-eight (28) day minimum requirement. Only advertising interruptions initiated by Company shall not count toward this requirement.</li>
+            </ul>
+
+            <p><strong>Service Duration Requirement</strong></p>
+            <ul>
+                <li>Client must have actively engaged with Company’s services for the full ninety (90) day guarantee period. Early termination or cancellation of services for any reason prior to the completion of the ninety (90) day period will automatically disqualify Client from eligibility for the Performance Guarantee refund.</li>
+            </ul>
+
+            <h3>3.3 Refund Process</h3>
+            <ul>
+                <li>To request a refund under this guarantee, Client must submit a written refund request within fourteen (14) days following the conclusion of the ninety (90) day guarantee period.</li>
+                <li>Client must provide all requested documentation demonstrating compliance with eligibility requirements, including but not limited to: proof of licensure, transaction history, appointment documentation, and conversation logs.</li>
+                <li>Company will review the refund request and supporting documentation within thirty (30) business days. If approved, refunds will be issued to the original payment method within fifteen (15) business days of approval.</li>
+                <li>Company reserves the right to request additional documentation or clarification to verify eligibility. Failure to provide requested documentation within fourteen (14) days may result in denial of the refund request.</li>
+            </ul>
+
+            <h2>4. CLIENT OBLIGATIONS</h2>
+            <ul>
+                <li>Client agrees to respond promptly to all leads and appointments generated by Company.</li>
+                <li>Client agrees to maintain professional standards in all interactions with prospects and comply with all applicable real estate laws and regulations.</li>
+                <li>Client agrees to provide accurate information regarding their experience, licensure, and transaction history.</li>
+                <li>Client agrees to maintain valid and current payment information and promptly update such information if it changes.</li>
+                <li>Client agrees to cooperate with Company's reasonable requests for information and documentation related to service performance.</li>
+            </ul>
+
+            <h2>5. LIMITATION OF LIABILITY</h2>
+            <ul>
+                <li>Company's services facilitate appointment generation but do not guarantee specific business outcomes beyond those expressly stated in the Performance Guarantee.</li>
+                <li>Company is not responsible for Client's ability to convert appointments into closed transactions, which depends on numerous factors within Client's control.</li>
+                <li>In no event shall Company's total liability exceed the total amount paid by Client to Company during the ninety (90) day guarantee period.</li>
+                <li>Company shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including lost profits or lost business opportunities.</li>
+            </ul>
+
+            <h2>6. TERM AND TERMINATION</h2>
+            <ul>
+                <li>This Agreement is governed by and subject to the terms of the Service Agreement signed between Client and Company. This Agreement commences on the date of first payment and continues for the duration specified in the Service Agreement. Termination of the Service Agreement automatically terminates this Agreement.</li>
+                <li>Either party may terminate this Agreement for material breach by the other party, provided written notice is given and the breaching party fails to cure within thirty (30) days.</li>
+                <li>Company may suspend services immediately if Client fails to maintain valid payment information or if payments fail.</li>
+                <li>Early termination by Client does not entitle Client to any refund except as provided in the Performance Guarantee.</li>
+            </ul>
+
+            <h2>7. INTELLECTUAL PROPERTY</h2>
+            <p>All intellectual property rights in Company's systems, processes, advertising creatives, and methodologies remain the exclusive property of Company. Client receives no ownership rights and may not reproduce, modify, or reverse engineer any aspect of Company's proprietary systems.</p>
+
+            <h2>8. CONFIDENTIALITY</h2>
+            <p>Both parties agree to maintain the confidentiality of any proprietary or confidential information disclosed during the course of this Agreement. This obligation survives termination of this Agreement.</p>
+
+            <h2>9. WARRANTIES AND DISCLAIMERS</h2>
+            <p>Company warrants that services will be performed in a professional and workmanlike manner consistent with industry standards.</p>
+            <p><strong>EXCEPT AS EXPRESSLY PROVIDED IN THE PERFORMANCE GUARANTEE, SERVICES ARE PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</strong></p>
+            <p>Company does not warrant that services will be uninterrupted or error-free, or that results will meet Client's expectations beyond those specified in the Performance Guarantee.</p>
+
+            <h2>10. INDEMNIFICATION</h2>
+            <p>Client agrees to indemnify, defend, and hold harmless Company, its officers, directors, employees, and agents from any claims, damages, losses, or expenses (including reasonable attorneys' fees) arising from: (a) Client's breach of this Agreement; (b) Client's violation of any law or regulation; (c) Client's interactions with prospects or third parties; or (d) any misrepresentation made by Client regarding their qualifications or experience.</p>
+
+            <h2>11. DISPUTE RESOLUTION</h2>
+            <ul>
+                <li>Any disputes arising under this Agreement shall first be subject to good-faith negotiation between the parties.</li>
+                <li>If negotiation fails to resolve the dispute within thirty (30) days, the parties agree to submit the dispute to binding arbitration in accordance with the rules of the American Arbitration Association.</li>
+                <li>The prevailing party in any dispute shall be entitled to recover reasonable attorneys' fees and costs.</li>
+            </ul>
+
+            <h2>12. GENERAL PROVISIONS</h2>
+            <ul>
+                <li><strong>Governing Law:</strong> This Agreement shall be governed by and construed in accordance with the laws of the state in which Client conducts their real estate business, without regard to its conflict of law principles.</li>
+                <li><strong>Entire Agreement:</strong> This Agreement, together with any Service Agreement or Order Form, constitutes the entire agreement between the parties and supersedes all prior agreements and understandings.</li>
+                <li><strong>Amendments:</strong> Company reserves the right to modify these terms at any time. Material changes will be communicated to Client with thirty (30) days' notice. Continued use of services after changes take effect constitutes acceptance.</li>
+                <li><strong>Severability:</strong> If any provision of this Agreement is found to be unenforceable or invalid, that provision shall be limited or eliminated to the minimum extent necessary so that this Agreement shall otherwise remain in full force and effect.</li>
+                <li><strong>Waiver:</strong> No waiver of any term of this Agreement shall be deemed a further or continuing waiver of such term or any other term.</li>
+                <li><strong>Assignment:</strong> Client may not assign this Agreement without Company's prior written consent. Company may assign this Agreement to any successor or affiliate.</li>
+                <li><strong>Force Majeure:</strong> Neither party shall be liable for any failure or delay in performance due to circumstances beyond its reasonable control.</li>
+                <li><strong>Notices:</strong> All notices required under this Agreement shall be in writing and delivered via email to the address on file or via certified mail.</li>
+            </ul>
+
+            <h2>ACCEPTANCE</h2>
+            <p>By purchasing Nexorra's services, you acknowledge that you have read, understood, and agree to be bound by these Terms of Purchase. If you do not agree to these terms, you should not purchase or use our services.</p>
+            
+            <hr class="border-white/10 my-8">
+            
+            <p class="text-sm text-slate-500">
+                For questions regarding these Terms of Purchase, please contact:<br>
+                Nexorra<br>
+                Last Updated: January 23, 2026
+            </p>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-black text-white border-t border-white/10 pt-16 pb-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <!-- Link back to home -->
+            <a href="index.html" class="inline-flex items-center gap-2 mb-8 group">
+                <span style="font-family: 'Times New Roman', Times, serif; font-style: italic;" class="font-bold text-3xl tracking-tight text-white group-hover:text-blue-400 transition-colors">Nexorra</span>
+            </a>
+            
+            <div class="flex justify-center space-x-8 mb-12 text-slate-400 text-sm font-medium">
+                <a href="index.html#services" class="hover:text-white transition-colors">Services</a>
+                <a href="index.html#testimonials" class="hover:text-white transition-colors">Testimonials</a>
+                <a href="index.html#about" class="hover:text-white transition-colors">About</a>
+                <a href="index.html#contact" class="hover:text-white transition-colors">Contact</a>
+            </div>
+
+            <div class="border-t border-white/5 pt-8 text-slate-600 text-xs">
+                <p>&copy; 2024 Nexorra. All rights reserved. <a href="#" class="hover:text-white transition-colors ml-4 text-white font-semibold">Terms of Purchase</a></p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
