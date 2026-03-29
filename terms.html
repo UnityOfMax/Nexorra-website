@@ -11,38 +11,64 @@
     <!-- Tailwind CSS (via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Plus Jakarta Sans + Manrope -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'],
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
                         display: ['Manrope', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
                     },
                     colors: {
-                        nexorraBg: '#020617', /* Deepest Dark (Slate 950) */
-                        nexorraDark: '#0B1120', /* Dark Navy */
-                        nexorraLight: '#1e293b', /* Slate 800 */
+                        nexorraBg: '#020617',
+                        nexorraDark: '#0B1120',
+                        nexorraLight: '#1e293b',
                         nexorraBlue: '#3b82f6',
                     }
                 }
             }
         }
     </script>
-    
+
     <style>
         body { background-color: #020617; color: #cbd5e1; }
-        
+
         /* Glass effect for nav */
         .glass-nav {
-            background: rgba(2, 6, 23, 0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(2, 6, 23, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.14);
+            box-shadow: 0 1px 40px rgba(59, 130, 246, 0.06), 0 4px 24px rgba(0,0,0,0.3);
+        }
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 0;
+            width: 0; height: 1px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+        .btn-shimmer { position: relative; overflow: hidden; }
+        .btn-shimmer::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -80%;
+            width: 55%; height: 200%;
+            background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.13) 50%, transparent 100%);
+            transform: skewX(-20deg);
+            animation: shimmer 3.5s ease-in-out infinite;
+        }
+        @keyframes shimmer { 0% { left: -80%; } 100% { left: 130%; } }
+        .footer-top-bar {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(59,130,246,0.5) 50%, transparent 100%);
         }
 
         /* Terms Typography */
@@ -95,16 +121,15 @@
     <!-- NAVIGATION MENU -->
     <nav class="sticky top-0 z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-24 items-center">
+            <div class="flex justify-between h-20 items-center">
                 <!-- Logo / Brand Name - Links back to Home -->
                 <a href="index.html" class="flex-shrink-0 flex items-center group">
-                    <span style="font-family: 'Times New Roman', Times, serif; font-style: italic;" class="font-bold text-3xl tracking-tight text-white group-hover:text-blue-400 transition-colors">Nexorra</span>
+                    <span style="font-family: 'Times New Roman', Times, serif; font-style: italic;" class="font-bold text-3xl tracking-tight text-white group-hover:text-blue-400 transition-colors duration-300">Nexorra</span>
                 </a>
-                
+
                 <!-- CTA -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <!-- Links back to Home Contact Section -->
-                    <a href="index.html#contact" class="bg-white text-nexorraBg px-6 py-3 rounded-full hover:bg-blue-50 transition-all duration-300 font-bold text-sm shadow-lg shadow-blue-900/20">
+                <div class="flex items-center space-x-8">
+                    <a href="index.html#contact" class="btn-shimmer bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 shadow-[0_0_18px_rgba(59,130,246,0.3)] hover:shadow-[0_0_28px_rgba(59,130,246,0.5)]">
                         Book a Demo
                     </a>
                 </div>
@@ -257,18 +282,18 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-black text-white border-t border-white/10 pt-16 pb-8 mt-auto">
+    <footer class="bg-black text-white border-t border-white/8 pt-14 pb-8 mt-auto">
+        <div class="footer-top-bar -mt-14 mb-14"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <!-- Link back to home -->
             <a href="index.html" class="inline-flex items-center gap-2 mb-8 group">
-                <span style="font-family: 'Times New Roman', Times, serif; font-style: italic;" class="font-bold text-3xl tracking-tight text-white group-hover:text-blue-400 transition-colors">Nexorra</span>
+                <span style="font-family: 'Times New Roman', Times, serif; font-style: italic;" class="font-bold text-3xl tracking-tight text-white group-hover:text-blue-400 transition-colors duration-300">Nexorra</span>
             </a>
-            
-            <div class="flex justify-center space-x-8 mb-12 text-slate-400 text-sm font-medium">
-                <a href="index.html#services" class="hover:text-white transition-colors">Services</a>
-                <a href="index.html#testimonials" class="hover:text-white transition-colors">Testimonials</a>
-                <a href="index.html#about" class="hover:text-white transition-colors">About</a>
-                <a href="index.html#contact" class="hover:text-white transition-colors">Contact</a>
+
+            <div class="flex justify-center space-x-8 mb-12 text-slate-500 text-sm font-medium">
+                <a href="index.html#services"     class="hover:text-white transition-colors duration-200">Services</a>
+                <a href="index.html#testimonials" class="hover:text-white transition-colors duration-200">Testimonials</a>
+                <a href="index.html#about"        class="hover:text-white transition-colors duration-200">About</a>
+                <a href="index.html#contact"      class="hover:text-white transition-colors duration-200">Contact</a>
             </div>
 
             <div class="border-t border-white/5 pt-8 text-slate-600 text-xs">

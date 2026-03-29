@@ -4,258 +4,381 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexorra - AI Automation for Real Estate</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
 
     <!-- Tailwind CSS (via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Google Fonts: Plus Jakarta Sans + Manrope -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'],
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
                         display: ['Manrope', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
                     },
                     colors: {
-                        nexorraBg: '#020617', /* Deepest Dark (Slate 950) */
-                        nexorraDark: '#0B1120', /* Dark Navy */
-                        nexorraLight: '#1e293b', /* Slate 800 */
+                        nexorraBg: '#020617',
+                        nexorraDark: '#0B1120',
+                        nexorraLight: '#1e293b',
                         nexorraBlue: '#3b82f6',
                     },
                     backgroundImage: {
                         'hero-glow': 'radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.25) 0%, transparent 70%)',
                         'blue-gradient-text': 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #1e40af 100%)',
-                        'card-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
+                        'card-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%)',
                         'flow-dark-to-light': 'linear-gradient(180deg, #020617 0%, #0f172a 100%)',
                         'flow-light-to-dark': 'linear-gradient(180deg, #0f172a 0%, #020617 100%)',
                     },
                     animation: {
-                        'draw-line': 'draw 4s ease-out forwards',
-                        'fade-in-1': 'fadeInUp 0.5s ease-out 1.2s forwards',
-                        'fade-in-2': 'fadeInUp 0.5s ease-out 2.4s forwards',
-                        'fade-in-3': 'fadeInUp 0.5s ease-out 3.8s forwards',
+                        'float': 'float 7s ease-in-out infinite',
+                        'float-slow': 'float 10s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s ease-in-out infinite',
                     },
                     keyframes: {
-                        draw: {
-                            'to': { strokeDashoffset: '0' }
-                        },
-                        fadeInUp: {
-                            'from': { opacity: '0', transform: 'translateY(10px) scale(0.95)' },
-                            'to': { opacity: '1', transform: 'translateY(0) scale(1)' }
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-22px)' }
                         }
                     }
                 }
             }
         }
     </script>
-    
+
     <style>
-        /* Custom Scrollbar Hiding */
+        /* ─── Scrollbar ─── */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         .logo-img { object-fit: contain; }
-        
-        /* Glass effect for nav */
+
+        /* ─── Navigation ─── */
         .glass-nav {
-            background: rgba(2, 6, 23, 0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(2, 6, 23, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.14);
+            box-shadow: 0 1px 40px rgba(59, 130, 246, 0.06), 0 4px 24px rgba(0,0,0,0.3);
         }
-        
-        /* Rich Gradient Background */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 0;
+            width: 0; height: 1px;
+            background: linear-gradient(90deg, #3b82f6, #6366f1);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* ─── Rich Background ─── */
         .rich-bg {
-            background: radial-gradient(circle at top right, #1e3a8a20, transparent 40%),
-                        radial-gradient(circle at bottom left, #17255410, transparent 40%),
-                        #020617;
+            background:
+                radial-gradient(circle at top right, rgba(30, 58, 138, 0.14), transparent 40%),
+                radial-gradient(circle at bottom left, rgba(23, 37, 84, 0.10), transparent 40%),
+                #020617;
         }
 
-        /* FAQ Details Animation */
-        details > summary { list-style: none; }
-        details > summary::-webkit-details-marker { display: none; }
-        
-        /* Image Marquee Styles */
+        /* ─── Animated Dot Grid ─── */
+        .dot-grid-bg {
+            background-image: radial-gradient(circle, rgba(59, 130, 246, 0.2) 1px, transparent 1px);
+            background-size: 32px 32px;
+            animation: grid-drift 28s linear infinite;
+        }
+        @keyframes grid-drift {
+            0%   { background-position: 0 0; }
+            100% { background-position: 32px 32px; }
+        }
+
+        /* ─── Scroll Reveal ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.revealed { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.08s; }
+        .reveal-delay-2 { transition-delay: 0.16s; }
+        .reveal-delay-3 { transition-delay: 0.24s; }
+        .reveal-delay-4 { transition-delay: 0.32s; }
+
+        /* ─── Badge Glow ─── */
+        .badge-glow {
+            background: linear-gradient(135deg, rgba(59,130,246,0.14), rgba(99,102,241,0.08));
+            box-shadow: 0 0 0 1px rgba(59,130,246,0.32), inset 0 0 20px rgba(59,130,246,0.04);
+            border: none;
+        }
+
+        /* ─── Shimmer Button ─── */
+        .btn-shimmer { position: relative; overflow: hidden; }
+        .btn-shimmer::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -80%;
+            width: 55%; height: 200%;
+            background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.13) 50%, transparent 100%);
+            transform: skewX(-20deg);
+            animation: shimmer 3.5s ease-in-out infinite;
+        }
+        @keyframes shimmer { 0% { left: -80%; } 100% { left: 130%; } }
+
+        /* ─── Card Glow ─── */
+        .card-glow {
+            transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+        }
+        .card-glow:hover {
+            box-shadow: 0 0 35px rgba(59,130,246,0.13), 0 20px 50px rgba(0,0,0,0.35);
+            border-color: rgba(59,130,246,0.38) !important;
+        }
+
+        /* ─── Service Card Number ─── */
+        .service-card-num {
+            position: absolute;
+            top: 1.2rem; right: 1.2rem;
+            font-size: 2.6rem; font-weight: 800;
+            color: rgba(255,255,255,0.04);
+            line-height: 1;
+            font-family: 'Manrope', sans-serif;
+            pointer-events: none; user-select: none;
+        }
+
+        /* ─── Image Marquee ─── */
         .image-marquee-item {
             position: relative;
-            width: 320px; /* Slightly wider */
-            flex-shrink: 0;
+            width: 320px; flex-shrink: 0;
             transition: all 0.3s ease;
-            margin-bottom: 20px; /* Space for shadow/rotation without clipping */
-            margin-top: 20px;
+            margin-bottom: 20px; margin-top: 20px;
         }
         .image-marquee-item img {
-            width: 100%;
-            height: auto;
+            width: 100%; height: auto;
             border-radius: 12px;
-            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: box-shadow 0.3s ease;
         }
-        .image-marquee-item:nth-child(odd) { transform: rotate(-2deg); }
+        .image-marquee-item:nth-child(odd)  { transform: rotate(-2deg); }
         .image-marquee-item:nth-child(even) { transform: rotate(2deg); }
         .image-marquee-item:hover { transform: scale(1.05) rotate(0deg); z-index: 10; }
+        .image-marquee-item:hover img { box-shadow: 0 0 24px rgba(59,130,246,0.18), 0 16px 40px rgba(0,0,0,0.4); }
 
-        /* Graph Path */
-        .graph-path {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
+        /* ─── Testimonial Quote Mark ─── */
+        .quote-mark { position: relative; }
+        .quote-mark::before {
+            content: '\201C';
+            font-size: 7rem; line-height: 0;
+            position: absolute;
+            top: 3.2rem; left: 1.1rem;
+            color: rgba(59,130,246,0.08);
+            font-family: Georgia, serif;
+            pointer-events: none;
         }
-        .popover-label { opacity: 0; }
+
+        /* ─── Profile Ring ─── */
+        .profile-ring-wrap {
+            position: relative; flex-shrink: 0;
+            width: 172px; height: 172px;
+        }
+        .profile-ring-spin {
+            position: absolute; inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #3b82f6, #6366f1, #1e40af, #8b5cf6, #3b82f6);
+            animation: rotate-ring 5s linear infinite;
+        }
+        @keyframes rotate-ring { to { transform: rotate(360deg); } }
+        .profile-ring-inner {
+            position: absolute; inset: 3px;
+            border-radius: 50%;
+            background: #0b1120;
+            overflow: hidden;
+        }
+
+        /* ─── FAQ Accordion ─── */
+        .faq-content {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .faq-content.open { max-height: 600px; }
+        .faq-chevron { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+        .faq-item.open .faq-chevron { transform: rotate(180deg); }
+        .faq-item {
+            transition: border-color 0.3s ease, background 0.3s ease;
+            border-left: 2px solid transparent;
+            padding-left: 1rem;
+        }
+        .faq-item.open {
+            border-left-color: rgba(59,130,246,0.45);
+        }
+
+        /* ─── Stats ─── */
+        .stat-item { transition: transform 0.3s ease; }
+        .stat-item:hover { transform: translateY(-3px); }
+        .stat-divider { border-color: rgba(59,130,246,0.18) !important; }
+
+        /* ─── Footer Top Bar ─── */
+        .footer-top-bar {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(59,130,246,0.5) 50%, transparent 100%);
+        }
     </style>
 </head>
 <body class="rich-bg text-slate-300 antialiased font-sans selection:bg-nexorraBlue selection:text-white overflow-x-hidden">
 
-    <!-- NAVIGATION MENU -->
+    <!-- ════════════════════════════════════
+         NAVIGATION
+    ════════════════════════════════════ -->
     <nav class="sticky top-0 z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-24 items-center">
-                <!-- Logo / Brand Name -->
+            <div class="flex justify-between h-20 items-center">
                 <a href="#" class="flex-shrink-0 flex items-center group">
-                    <span style="font-family: 'Times New Roman', Times, serif; font-style: italic;" class="font-bold text-3xl tracking-tight text-white group-hover:text-blue-400 transition-colors">Nexorra</span>
+                    <span style="font-family: 'Times New Roman', Times, serif; font-style: italic;" class="font-bold text-3xl tracking-tight text-white group-hover:text-blue-400 transition-colors duration-300">Nexorra</span>
                 </a>
-                
-                <!-- Desktop Menu -->
+
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#services" class="text-sm font-semibold text-slate-300 hover:text-white transition-colors uppercase tracking-wide">Services</a>
-                    <a href="#testimonials" class="text-sm font-semibold text-slate-300 hover:text-white transition-colors uppercase tracking-wide">Testimonials</a>
-                    <a href="#about" class="text-sm font-semibold text-slate-300 hover:text-white transition-colors uppercase tracking-wide">About</a>
-                    <a href="#contact" class="text-sm font-semibold text-slate-300 hover:text-white transition-colors uppercase tracking-wide">Contact</a>
-                    
-                    <a href="#contact" class="bg-white text-nexorraBg px-6 py-3 rounded-full hover:bg-blue-50 transition-all duration-300 font-bold text-sm transform hover:-translate-y-0.5 shadow-lg shadow-blue-900/20">
+                    <a href="#services"      class="nav-link text-sm font-semibold text-slate-300 hover:text-white transition-colors uppercase tracking-wide">Services</a>
+                    <a href="#testimonials"  class="nav-link text-sm font-semibold text-slate-300 hover:text-white transition-colors uppercase tracking-wide">Testimonials</a>
+                    <a href="#about"         class="nav-link text-sm font-semibold text-slate-300 hover:text-white transition-colors uppercase tracking-wide">About</a>
+                    <a href="#contact"       class="nav-link text-sm font-semibold text-slate-300 hover:text-white transition-colors uppercase tracking-wide">Contact</a>
+                    <a href="#contact" class="btn-shimmer bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-[0_0_18px_rgba(59,130,246,0.3)] hover:shadow-[0_0_28px_rgba(59,130,246,0.5)]">
                         Book a Demo
                     </a>
                 </div>
 
-                <!-- Mobile Menu Button -->
                 <div class="md:hidden flex items-center">
-                    <a href="#contact" class="bg-white text-nexorraBg px-4 py-2 rounded-full text-sm font-bold">Book Demo</a>
+                    <a href="#contact" class="btn-shimmer bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-[0_0_14px_rgba(59,130,246,0.3)]">Book Demo</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
+    <!-- ════════════════════════════════════
+         HERO
+    ════════════════════════════════════ -->
     <header class="relative pt-32 pb-32 lg:pt-48 lg:pb-40 overflow-hidden bg-flow-dark-to-light">
-        <!-- Background Glow -->
+        <!-- Dot-grid layer -->
+        <div class="absolute inset-0 dot-grid-bg opacity-[0.22] pointer-events-none"></div>
+        <!-- Radial glow -->
         <div class="absolute inset-0 bg-hero-glow pointer-events-none"></div>
-        <div class="absolute top-1/4 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] opacity-60"></div>
-        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[100px] opacity-50"></div>
+        <!-- Floating orbs -->
+        <div class="absolute top-1/4 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] opacity-60 animate-float"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[100px] opacity-50 animate-float-slow"></div>
 
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-            
+
             <!-- Badge -->
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-blue-400 text-xs font-bold uppercase tracking-wider mb-8 hover:bg-white/10 transition-colors cursor-default">
+            <div class="reveal inline-flex items-center gap-2 px-4 py-2 rounded-full badge-glow text-blue-400 text-xs font-bold uppercase tracking-wider mb-8 cursor-default">
                 <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
                 US based - Appointment Setting Agency
             </div>
 
-            <!-- Main Heading -->
-            <h1 class="text-6xl sm:text-7xl lg:text-8xl font-display font-extrabold tracking-tight text-white mb-8 leading-[1.1]">
+            <!-- Heading -->
+            <h1 class="reveal reveal-delay-1 text-6xl sm:text-7xl lg:text-8xl font-display font-extrabold tracking-tight text-white mb-8 leading-[1.1]">
                 Real Estate <br />
                 <span class="text-transparent bg-clip-text bg-blue-gradient-text">Specialized Marketing</span>
             </h1>
 
             <!-- Subheading -->
-            <p class="text-lg sm:text-2xl text-slate-400 mb-8 max-w-3xl mx-auto leading-relaxed font-light">
-                US based agency, working with agents across US and Canada. All services done in house. <span class="text-white font-medium">We get you deals. It's that simple!</span>
+            <p class="reveal reveal-delay-2 text-lg sm:text-2xl text-slate-400 mb-8 max-w-3xl mx-auto leading-relaxed font-light">
+                US based agency, working with agents across US and Canada. All services done in house.
+                <span class="text-white font-medium">We get you deals. It's that simple!</span>
             </p>
 
-            <!-- Guarantee Box -->
-            <div class="max-w-2xl mx-auto mb-12 p-6 rounded-2xl bg-white/5 border border-blue-500/20 backdrop-blur-md shadow-lg shadow-blue-900/10">
+            <!-- Guarantee box -->
+            <div class="reveal reveal-delay-3 max-w-2xl mx-auto mb-12 p-6 rounded-2xl bg-white/5 border border-blue-500/20 backdrop-blur-md shadow-lg shadow-blue-900/10">
                 <h3 class="text-blue-400 font-bold text-sm tracking-widest uppercase mb-2">Performance-Guaranteed Partnerships</h3>
                 <p class="text-white text-lg sm:text-xl font-medium">Results within your agreement, or we refund your investment!</p>
             </div>
 
-            <!-- Buttons -->
-            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <a href="#contact" class="w-full sm:w-auto px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white rounded-full font-bold text-lg transition-all duration-300 shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] hover:scale-105">
+            <!-- CTA Buttons -->
+            <div class="reveal reveal-delay-4 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <a href="#contact" class="btn-shimmer w-full sm:w-auto px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white rounded-full font-bold text-lg transition-all duration-300 shadow-[0_0_22px_rgba(59,130,246,0.32)] hover:shadow-[0_0_40px_rgba(59,130,246,0.55)] hover:scale-105">
                     Book Your Discovery Call
                 </a>
-                <a href="#services" class="w-full sm:w-auto px-10 py-5 bg-white/5 border border-white/10 text-white rounded-full font-bold text-lg hover:bg-white/10 hover:border-white/20 transition-all duration-300 backdrop-blur-sm">
+                <a href="#services" class="w-full sm:w-auto px-10 py-5 bg-white/5 border border-white/10 text-white rounded-full font-bold text-lg hover:bg-white/10 hover:border-blue-500/30 transition-all duration-300 backdrop-blur-sm">
                     Learn More
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- BROKERAGE SCROLL (Restored & JS-enabled) -->
+    <!-- ════════════════════════════════════
+         BROKERAGE SCROLL
+    ════════════════════════════════════ -->
     <section class="py-16 bg-[#0f172a] border-t border-white/5 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-10">
-            <p class="text-sm uppercase tracking-wider font-semibold text-slate-500">Trusted by Agents From Leading Brokerages</p>
+            <p class="text-xs uppercase tracking-widest font-semibold text-slate-500">Trusted by Agents From Leading Brokerages</p>
         </div>
         <div class="w-full flex overflow-hidden relative">
-            <!-- Left and Right fade gradient -->
             <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#0f172a] to-transparent z-10 pointer-events-none"></div>
             <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#0f172a] to-transparent z-10 pointer-events-none"></div>
 
-            <!-- JS Scroll Container (brokerage-loop) -->
             <div id="brokerage-loop" class="flex overflow-x-auto no-scrollbar gap-20">
-                <!-- Original Set (Full Color) -->
                 <div class="flex gap-20 shrink-0 items-center">
-                    <img src="logos/berkshire-hathaway-logo.jpg" loading="lazy" alt="Berkshire Hathaway" class="h-20 w-auto logo-img">
-                    <img src="logos/century-21-real-estate-logo.png" loading="lazy" alt="Century 21" class="h-16 w-auto logo-img">
-                    <img src="logos/coldwell-banker-logo.png" loading="lazy" alt="Coldwell Banker" class="h-16 w-auto logo-img">
-                    <img src="logos/exp-realty-color.png" loading="lazy" alt="eXp Realty" class="h-16 w-auto logo-img">
-                    <img src="logos/keller-williams-logo.png" loading="lazy" alt="Keller Williams" class="h-16 w-auto logo-img">
-                    <img src="logos/remax-logo.jpg" loading="lazy" alt="ReMax" class="h-20 w-auto logo-img">
+                    <img src="logos/berkshire-hathaway-logo.jpg" loading="lazy" alt="Berkshire Hathaway" class="h-20 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/century-21-real-estate-logo.png" loading="lazy" alt="Century 21" class="h-16 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/coldwell-banker-logo.png" loading="lazy" alt="Coldwell Banker" class="h-16 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/exp-realty-color.png" loading="lazy" alt="eXp Realty" class="h-16 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/keller-williams-logo.png" loading="lazy" alt="Keller Williams" class="h-16 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/remax-logo.jpg" loading="lazy" alt="ReMax" class="h-20 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
                 </div>
-                <!-- Duplicate 1 -->
                 <div class="flex gap-20 shrink-0 items-center">
-                    <img src="logos/berkshire-hathaway-logo.jpg" loading="lazy" alt="Berkshire Hathaway" class="h-20 w-auto logo-img">
-                    <img src="logos/century-21-real-estate-logo.png" loading="lazy" alt="Century 21" class="h-16 w-auto logo-img">
-                    <img src="logos/coldwell-banker-logo.png" loading="lazy" alt="Coldwell Banker" class="h-16 w-auto logo-img">
-                    <img src="logos/exp-realty-color.png" loading="lazy" alt="eXp Realty" class="h-16 w-auto logo-img">
-                    <img src="logos/keller-williams-logo.png" loading="lazy" alt="Keller Williams" class="h-16 w-auto logo-img">
-                    <img src="logos/remax-logo.jpg" loading="lazy" alt="ReMax" class="h-20 w-auto logo-img">
+                    <img src="logos/berkshire-hathaway-logo.jpg" loading="lazy" alt="Berkshire Hathaway" class="h-20 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/century-21-real-estate-logo.png" loading="lazy" alt="Century 21" class="h-16 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/coldwell-banker-logo.png" loading="lazy" alt="Coldwell Banker" class="h-16 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/exp-realty-color.png" loading="lazy" alt="eXp Realty" class="h-16 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/keller-williams-logo.png" loading="lazy" alt="Keller Williams" class="h-16 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/remax-logo.jpg" loading="lazy" alt="ReMax" class="h-20 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
                 </div>
-                <!-- Duplicate 2 -->
                 <div class="flex gap-20 shrink-0 items-center">
-                    <img src="logos/berkshire-hathaway-logo.jpg" loading="lazy" alt="Berkshire Hathaway" class="h-20 w-auto logo-img">
-                    <img src="logos/century-21-real-estate-logo.png" loading="lazy" alt="Century 21" class="h-16 w-auto logo-img">
-                    <img src="logos/coldwell-banker-logo.png" loading="lazy" alt="Coldwell Banker" class="h-16 w-auto logo-img">
-                    <img src="logos/exp-realty-color.png" loading="lazy" alt="eXp Realty" class="h-16 w-auto logo-img">
-                    <img src="logos/keller-williams-logo.png" loading="lazy" alt="Keller Williams" class="h-16 w-auto logo-img">
-                    <img src="logos/remax-logo.jpg" loading="lazy" alt="ReMax" class="h-20 w-auto logo-img">
+                    <img src="logos/berkshire-hathaway-logo.jpg" loading="lazy" alt="Berkshire Hathaway" class="h-20 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/century-21-real-estate-logo.png" loading="lazy" alt="Century 21" class="h-16 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/coldwell-banker-logo.png" loading="lazy" alt="Coldwell Banker" class="h-16 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/exp-realty-color.png" loading="lazy" alt="eXp Realty" class="h-16 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/keller-williams-logo.png" loading="lazy" alt="Keller Williams" class="h-16 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
+                    <img src="logos/remax-logo.jpg" loading="lazy" alt="ReMax" class="h-20 w-auto logo-img opacity-50 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- STATS SECTION -->
+    <!-- ════════════════════════════════════
+         STATS
+    ════════════════════════════════════ -->
     <section class="border-b border-white/5 bg-nexorraBg relative z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/10 py-14">
-                <div class="p-2">
-                    <div class="text-4xl sm:text-5xl font-display font-bold text-white mb-2">120</div>
-                    <div class="text-slate-500 text-xs sm:text-sm font-medium uppercase tracking-wider">Agents Served</div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-0 text-center divide-x stat-divider py-14">
+                <div class="stat-item p-6">
+                    <div class="text-4xl sm:text-5xl font-display font-bold text-white mb-2 counter" data-target="120" data-prefix="" data-suffix="">120</div>
+                    <div class="text-slate-500 text-xs sm:text-sm font-medium uppercase tracking-widest mt-1">Agents Served</div>
                 </div>
-                <div class="p-2">
-                    <div class="text-4xl sm:text-5xl font-display font-bold text-white mb-2">5,000+</div>
-                    <div class="text-slate-500 text-xs sm:text-sm font-medium uppercase tracking-wider">Appointments</div>
+                <div class="stat-item p-6">
+                    <div class="text-4xl sm:text-5xl font-display font-bold text-white mb-2 counter" data-target="5000" data-prefix="" data-suffix="+">5,000+</div>
+                    <div class="text-slate-500 text-xs sm:text-sm font-medium uppercase tracking-widest mt-1">Appointments</div>
                 </div>
-                <div class="p-2">
-                    <div class="text-4xl sm:text-5xl font-display font-bold text-white mb-2">1,500+</div>
-                    <div class="text-slate-500 text-xs sm:text-sm font-medium uppercase tracking-wider">Deals Closed</div>
+                <div class="stat-item p-6">
+                    <div class="text-4xl sm:text-5xl font-display font-bold text-white mb-2 counter" data-target="1500" data-prefix="" data-suffix="+">1,500+</div>
+                    <div class="text-slate-500 text-xs sm:text-sm font-medium uppercase tracking-widest mt-1">Deals Closed</div>
                 </div>
-                <div class="p-2">
-                    <div class="text-4xl sm:text-5xl font-display font-bold text-white mb-2">$600M+</div>
-                    <div class="text-slate-500 text-xs sm:text-sm font-medium uppercase tracking-wider">Sales Volume</div>
+                <div class="stat-item p-6">
+                    <div class="text-4xl sm:text-5xl font-display font-bold text-white mb-2 counter" data-target="600" data-prefix="$" data-suffix="M+">$600M+</div>
+                    <div class="text-slate-500 text-xs sm:text-sm font-medium uppercase tracking-widest mt-1">Sales Volume</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- HOW WE HELP (Services) -->
+    <!-- ════════════════════════════════════
+         SERVICES
+    ════════════════════════════════════ -->
     <section id="services" class="py-32 bg-flow-light-to-dark relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-24">
+            <div class="text-center mb-24 reveal">
                 <h2 class="text-4xl md:text-5xl font-display font-bold text-white mb-6">
                     How We Help Real Estate Agents <span class="text-transparent bg-clip-text bg-blue-gradient-text">Succeed</span>
                 </h2>
@@ -263,264 +386,396 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Service Boxes -->
-                <div class="group bg-card-gradient p-8 rounded-3xl transition-all duration-300 border border-white/5 hover:border-blue-500/50 backdrop-blur-sm hover:-translate-y-2">
-                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-blue-400 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 border border-white/10">
+
+                <!-- Card 1 -->
+                <div class="reveal reveal-delay-1 group card-glow bg-card-gradient p-8 rounded-3xl border border-white/5 backdrop-blur-sm hover:-translate-y-2 relative overflow-hidden">
+                    <span class="service-card-num">01</span>
+                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-blue-400 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 border border-white/10 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.35)]">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-4">Appointment Generation</h3>
                     <p class="text-slate-400 leading-relaxed text-sm mb-6">Our system generates leads, nurtures and qualifies them to a referral level standard which means you are only talking to people who genuinly want to buy or sell and have the money and the motivation to move forward.</p>
                     <ul class="space-y-3">
-                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">We <strong class="text-white">call, text and email</strong> the leads for you</span></li>
-                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">No time wasters or tire kickers</span></li>
-                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">Booked straight into your calendar fully automatically</span></li>
+                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5 flex-shrink-0"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">We <strong class="text-white">call, text and email</strong> the leads for you</span></li>
+                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5 flex-shrink-0"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">No time wasters or tire kickers</span></li>
+                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5 flex-shrink-0"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">Booked straight into your calendar fully automatically</span></li>
                     </ul>
                 </div>
-                <!-- ... other service boxes ... -->
-                 <div class="group bg-card-gradient p-8 rounded-3xl transition-all duration-300 border border-white/5 hover:border-blue-500/50 backdrop-blur-sm hover:-translate-y-2">
-                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-blue-400 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 border border-white/10">
+
+                <!-- Card 2 -->
+                <div class="reveal reveal-delay-2 group card-glow bg-card-gradient p-8 rounded-3xl border border-white/5 backdrop-blur-sm hover:-translate-y-2 relative overflow-hidden">
+                    <span class="service-card-num">02</span>
+                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-blue-400 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 border border-white/10 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.35)]">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-4">Done-For-You Qualification</h3>
                     <p class="text-slate-400 leading-relaxed text-sm mb-6">Other agencies generate leads and have you call them but we understand how tedious this can be. We call every lead individually within the first 60 seconds of them entering our system so we can keep the motivation going and make sure they are really ready.</p>
                     <ul class="space-y-3">
-                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">Done-for-you calling</span></li>
-                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">Automated AI drip campaigns for 2+ years</span></li>
-                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">Qualified based on your ideal client</span></li>
+                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5 flex-shrink-0"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">Done-for-you calling</span></li>
+                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5 flex-shrink-0"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">Automated AI drip campaigns for 2+ years</span></li>
+                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5 flex-shrink-0"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">Qualified based on your ideal client</span></li>
                     </ul>
                 </div>
-                 <div class="group bg-card-gradient p-8 rounded-3xl transition-all duration-300 border border-white/5 hover:border-blue-500/50 backdrop-blur-sm hover:-translate-y-2">
-                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-blue-400 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 border border-white/10">
+
+                <!-- Card 3 -->
+                <div class="reveal reveal-delay-3 group card-glow bg-card-gradient p-8 rounded-3xl border border-white/5 backdrop-blur-sm hover:-translate-y-2 relative overflow-hidden">
+                    <span class="service-card-num">03</span>
+                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-blue-400 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 border border-white/10 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.35)]">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-4">Done-For-You System</h3>
                     <p class="text-slate-400 leading-relaxed text-sm mb-6">Every aspect of our system is done for you, and you only talk to people who are fully qualified and ready to move forward. Every step before that is done by us.</p>
                     <ul class="space-y-3">
-                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">Seamless integration for minimal disruption on your current system</span></li>
+                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5 flex-shrink-0"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">Seamless integration for minimal disruption on your current system</span></li>
                     </ul>
                 </div>
-                 <div class="group bg-card-gradient p-8 rounded-3xl transition-all duration-300 border border-white/5 hover:border-blue-500/50 backdrop-blur-sm hover:-translate-y-2">
-                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-blue-400 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 border border-white/10">
+
+                <!-- Card 4 -->
+                <div class="reveal reveal-delay-4 group card-glow bg-card-gradient p-8 rounded-3xl border border-white/5 backdrop-blur-sm hover:-translate-y-2 relative overflow-hidden">
+                    <span class="service-card-num">04</span>
+                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-blue-400 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 border border-white/10 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.35)]">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-4">Daily Reports & Transparency</h3>
                     <p class="text-slate-400 leading-relaxed text-sm mb-6">We work with you as partners ensuring you know exactly what's going on throughout the entire process so that you're never left in the dark</p>
                     <ul class="space-y-3">
-                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">Daily reports via email</span></li>
-                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">Updates on very change</span></li>
-                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">24/7 communication</span></li>
+                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5 flex-shrink-0"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">Daily reports via email</span></li>
+                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5 flex-shrink-0"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">Updates on every change</span></li>
+                        <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5 flex-shrink-0"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span><span class="text-slate-300 text-sm">24/7 communication</span></li>
                     </ul>
                 </div>
+
             </div>
         </div>
     </section>
 
-    <!-- REAL PEOPLE, REAL RESULTS (Videos) -->
+    <!-- ════════════════════════════════════
+         RESULTS (Videos)
+    ════════════════════════════════════ -->
     <section id="results" class="py-32 relative bg-flow-dark-to-light">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-20">
+            <div class="text-center mb-20 reveal">
                 <h2 class="text-4xl md:text-5xl font-display font-bold text-white mb-6">Real People, Real Results</h2>
                 <p class="text-xl text-slate-400">Don't just take our word for it. Watch the stories.</p>
             </div>
 
-            <!-- Vimeo Video Grid -->
             <div class="flex flex-wrap justify-center gap-8 w-full">
-                <!-- Video 1 -->
-                <div class="w-full md:w-[45%] lg:w-[30%] rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 backdrop-blur-md aspect-video relative">
+                <div class="reveal reveal-delay-1 w-full md:w-[45%] lg:w-[30%] rounded-2xl overflow-hidden shadow-2xl card-glow border border-white/10 bg-white/5 backdrop-blur-md aspect-video relative">
                     <iframe class="absolute top-0 left-0 w-full h-full" src="https://player.vimeo.com/video/1158506423?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" title="Client Testimonial Video"></iframe>
                 </div>
-                <!-- Video 2 -->
-                <div class="w-full md:w-[45%] lg:w-[30%] rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 backdrop-blur-md aspect-video relative">
+                <div class="reveal reveal-delay-2 w-full md:w-[45%] lg:w-[30%] rounded-2xl overflow-hidden shadow-2xl card-glow border border-white/10 bg-white/5 backdrop-blur-md aspect-video relative">
                     <iframe class="absolute top-0 left-0 w-full h-full" src="https://player.vimeo.com/video/1158506615?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" title="Client Testimonial Video"></iframe>
                 </div>
-                <!-- Video 3 -->
-                <div class="w-full md:w-[45%] lg:w-[30%] rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 backdrop-blur-md aspect-video relative">
+                <div class="reveal reveal-delay-3 w-full md:w-[45%] lg:w-[30%] rounded-2xl overflow-hidden shadow-2xl card-glow border border-white/10 bg-white/5 backdrop-blur-md aspect-video relative">
                     <iframe class="absolute top-0 left-0 w-full h-full" src="https://player.vimeo.com/video/1158506072?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" title="Client Testimonial Video"></iframe>
                 </div>
-                <!-- Video 4 -->
-                <div class="w-full md:w-[45%] lg:w-[30%] rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 backdrop-blur-md aspect-video relative">
+                <div class="reveal reveal-delay-1 w-full md:w-[45%] lg:w-[30%] rounded-2xl overflow-hidden shadow-2xl card-glow border border-white/10 bg-white/5 backdrop-blur-md aspect-video relative">
                     <iframe class="absolute top-0 left-0 w-full h-full" src="https://player.vimeo.com/video/1157692636?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" title="Client Testimonial Video"></iframe>
                 </div>
-                <!-- Video 5 -->
-                <div class="w-full md:w-[45%] lg:w-[30%] rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 backdrop-blur-md aspect-video relative">
+                <div class="reveal reveal-delay-2 w-full md:w-[45%] lg:w-[30%] rounded-2xl overflow-hidden shadow-2xl card-glow border border-white/10 bg-white/5 backdrop-blur-md aspect-video relative">
                     <iframe class="absolute top-0 left-0 w-full h-full" src="https://player.vimeo.com/video/1157692659?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" title="Client Testimonial Video"></iframe>
                 </div>
             </div>
-            <!-- Vimeo Player Script -->
             <script src="https://player.vimeo.com/api/player.js"></script>
         </div>
     </section>
 
-    <!-- SCROLLING REVIEWS (Text) -->
+    <!-- ════════════════════════════════════
+         TESTIMONIALS (Text)
+    ════════════════════════════════════ -->
     <section id="testimonials" class="py-24 bg-[#0f172a] overflow-hidden border-y border-white/5">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 reveal">
             <h2 class="text-4xl font-display font-bold text-white">Client Success Stories</h2>
         </div>
 
         <div id="reviews-loop" class="flex overflow-x-auto no-scrollbar gap-6">
-             <!-- Reviews Content (Duplicated 3x for smooth scrolling) -->
-             <div class="flex gap-6 shrink-0">
-                <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“I was skeptical at first because I’d tried lead gen services before that just sent me tire-kickers. These guys are different. In the first full month we closed 3 extra transactions that I 100% attribute to their appointments, two single-family and one duplex. That added roughly $28k to my GCI for the month. The leads actually pick up, show up, and are pre-qualified. Night and day from what I was getting on my own.”</p>
-                    <div><p class="font-bold text-white text-base">Brandon H.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+            <!-- SET 1 -->
+            <div class="flex gap-6 shrink-0">
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"I was skeptical at first because I'd tried lead gen services before that just sent me tire-kickers. These guys are different. In the first full month we closed 3 extra transactions that I 100% attribute to their appointments, two single-family and one duplex. That added roughly $28k to my GCI for the month. The leads actually pick up, show up, and are pre-qualified. Night and day from what I was getting on my own."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">BH</div>
+                        <div><p class="font-bold text-white text-sm">Brandon H.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“Been with them for 6 months now and it’s been steady. Average 2.5 deals per month that I probably wouldn’t have gotten otherwise. Last quarter alone that was about 80k extra GCI. Appointments are high quality—serious buyers and sellers who already know my name and what I'm about when I get on the phone with them. Saves me so much time chasing dead ends.”</p>
-                    <div><p class="font-bold text-white text-base">Sarah P.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"Been with them for 6 months now and it's been steady. Average 2.5 deals per month that I probably wouldn't have gotten otherwise. Last quarter alone that was about 80k extra GCI. Appointments are high quality—serious buyers and sellers who already know my name and what I'm about when I get on the phone with them. Saves me so much time chasing dead ends."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">SP</div>
+                        <div><p class="font-bold text-white text-sm">Sarah P.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“Before this agency I was lucky to close 1 off-market deal every other month from my own cold calls. Now it’s consistently around 2 per month. February was my best: 3 closings, $32k GCI bump. I'm only talking to people who are interested. Worth every penny.”</p>
-                    <div><p class="font-bold text-white text-base">Mike D.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"Before this agency I was lucky to close 1 off-market deal every other month from my own cold calls. Now it's consistently around 2 per month. February was my best: 3 closings, $32k GCI bump. I'm only talking to people who are interested. Worth every penny."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">MD</div>
+                        <div><p class="font-bold text-white text-sm">Mike D.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“These guys just work. I went from maybe 12–14 closes a year to pushing 35. That’s basically 2 extra deals almost every single month. I'm making an extra 20k with these guys which has completely changed my life. Appointments feel warm, not cold. Realtors, if you’re on the fence, don't be, the team at nexorra are outstanding.”</p>
-                    <div><p class="font-bold text-white text-base">Jessica R.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"These guys just work. I went from maybe 12–14 closes a year to pushing 35. That's basically 2 extra deals almost every single month. I'm making an extra 20k with these guys which has completely changed my life. Appointments feel warm, not cold. Realtors, if you're on the fence, don't be, the team at nexorra are outstanding."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">JR</div>
+                        <div><p class="font-bold text-white text-sm">Jessica R.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“Quality over quantity is what sold me. They don’t blast me with 50 junk appointments. I get 8–12 solid ones a month and usually convert 20–30% into deals. That’s shaken out to 2–3 closes monthly for the past four months straight. I've made over $100k so far with them. Game changer for a solo agent like me.”</p>
-                    <div><p class="font-bold text-white text-base">Tom B.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"Quality over quantity is what sold me. They don't blast me with 50 junk appointments. I get 8–12 solid ones a month and usually convert 20–30% into deals. That's shaken out to 2–3 closes monthly for the past four months straight. I've made over $100k so far with them. Game changer for a solo agent like me."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">TB</div>
+                        <div><p class="font-bold text-white text-sm">Tom B.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“I was burned out doing my own prospecting. Handed it off and immediately saw results. First 90 days: 7 additional transactions, roughly $68k in extra GCI. The appointments are so much better! People actually expecting my call, not surprised. I’m back to enjoying the listing and buyer side instead of living on the phone.”</p>
-                    <div><p class="font-bold text-white text-base">Michael S.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"I was burned out doing my own prospecting. Handed it off and immediately saw results. First 90 days: 7 additional transactions, roughly $68k in extra GCI. The appointments are so much better! People actually expecting my call, not surprised. I'm back to enjoying the listing and buyer side instead of living on the phone."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">MS</div>
+                        <div><p class="font-bold text-white text-sm">Michael S.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“Short and sweet: 2 deals in month 1, 3 in month 2, 2 in month 3. Averaging right around $23k extra GCI per month. The quality is amazing, so I haven't had to deal with on no-shows or price shoppers. Best outsourcing decision I’ve made in 8 years as a realtor.”</p>
-                    <div><p class="font-bold text-white text-base">Jennifer L.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"Short and sweet: 2 deals in month 1, 3 in month 2, 2 in month 3. Averaging right around $23k extra GCI per month. The quality is amazing, so I haven't had to deal with on no-shows or price shoppers. Best outsourcing decision I've made in 8 years as a realtor."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">JL</div>
+                        <div><p class="font-bold text-white text-sm">Jennifer L.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“As a team leader, I was hesitant to add another expense. But the math works. Our team average went from 4–5 sides/month to 7–8 thanks to their consistent flow. That’s ~$25k–50k additional GCI monthly for the team. Appointments come in scripted, polite, and prepped. Clients feel taken care of from the first call.”</p>
-                    <div><p class="font-bold text-white text-base">David R.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"As a team leader, I was hesitant to add another expense. But the math works. Our team average went from 4–5 sides/month to 7–8 thanks to their consistent flow. That's ~$25k–50k additional GCI monthly for the team. Appointments come in scripted, polite, and prepped. Clients feel taken care of from the first call."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">DR</div>
+                        <div><p class="font-bold text-white text-sm">David R.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“In the frist 2 months we closed 3 from their appointments. $41k GCI spike. Month 3 was another 2. Now it’s just part of my business engine. The quality is what keeps me working with them.”</p>
-                    <div><p class="font-bold text-white text-base">Sarah K.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"In the frist 2 months we closed 3 from their appointments. $41k GCI spike. Month 3 was another 2. Now it's just part of my business engine. The quality is what keeps me working with them."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">SK</div>
+                        <div><p class="font-bold text-white text-sm">Sarah K.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“Went from struggling to get 1–2 decent seller appointments a month to having 3–4 legit listing opportunities weekly. Closed 9 extra in the first 5 months (that's 90k added in GCI). What I love most is the predictability. I can plan my weeks around real meetings, not hope.”</p>
-                    <div><p class="font-bold text-white text-base">Robert M.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"Went from struggling to get 1–2 decent seller appointments a month to having 3–4 legit listing opportunities weekly. Closed 9 extra in the first 5 months (that's 90k added in GCI). What I love most is the predictability. I can plan my weeks around real meetings, not hope."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">RM</div>
+                        <div><p class="font-bold text-white text-sm">Robert M.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“They’ve been setting for me since last spring. Conservative numbers: 2.1 extra deals per month average. At my commission split that’s been adding $18–22k/month to personal production. Appointments are professional and the no-show rate is under 10%. Huge relief after years of flaky leads.”</p>
-                    <div><p class="font-bold text-white text-base">Emily T.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"They've been setting for me since last spring. Conservative numbers: 2.1 extra deals per month average. At my commission split that's been adding $18–22k/month to personal production. Appointments are professional and the no-show rate is under 10%. Huge relief after years of flaky leads."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">ET</div>
+                        <div><p class="font-bold text-white text-sm">Emily T.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“I tell everyone about this service. My before: maybe 10–12 transactions/year. After: on pace for 24–26 this year. The extra 10–12 sides are almost all from their qualified appointments. That’s well over $100k in additional GCI. They make me look good because the prospects are already warmed up.”</p>
-                    <div><p class="font-bold text-white text-base">James P.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"I tell everyone about this service. My before: maybe 10–12 transactions/year. After: on pace for 24–26 this year. The extra 10–12 sides are almost all from their qualified appointments. That's well over $100k in additional GCI. They make me look good because the prospects are already warmed up."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">JP</div>
+                        <div><p class="font-bold text-white text-sm">James P.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“I've been working with the team at Nexorra for 6 weeks now and I've closed 3 deals from their bookings. All luxury buyers, $38k GCI just from those. The detail they capture (motivation, timeline, budget) makes my job easy.”</p>
-                    <div><p class="font-bold text-white text-base">Ashley B.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"I've been working with the team at Nexorra for 6 weeks now and I've closed 3 deals from their bookings. All luxury buyers, $38k GCI just from those. The detail they capture (motivation, timeline, budget) makes my job easy."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">AB</div>
+                        <div><p class="font-bold text-white text-sm">Ashley B.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“I'm a busy guy, since I started working with Nexorra I stopped wasting time on Zillow leads and cold calls. Now I get 10–15 quality sits a month, close about 20%. That’s shaking out to 2–3 deals monthly, adding $20k–30k GCI consistently. Appointments show up prepared and serious. Highly recommend if you hate prospecting.”</p>
-                    <div><p class="font-bold text-white text-base">Christopher H.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"I'm a busy guy, since I started working with Nexorra I stopped wasting time on Zillow leads and cold calls. Now I get 10–15 quality sits a month, close about 20%. That's shaking out to 2–3 deals monthly, adding $20k–30k GCI consistently. Appointments show up prepared and serious. Highly recommend if you hate prospecting."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">CH</div>
+                        <div><p class="font-bold text-white text-sm">Christopher H.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“Six-month update: 14 extra transactions directly from their appointment setting. Average commission around $9,800 so that’s ~$137k added to my business. Before them I was stuck at 18–20 sides/year. Now I’m projecting 30+. The appointments feel like warm referrals, not cold outreach. Best ROI I’ve had in marketing.”</p>
-                    <div><p class="font-bold text-white text-base">Lauren G.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"Six-month update: 14 extra transactions directly from their appointment setting. Average commission around $9,800 so that's ~$137k added to my business. Before them I was stuck at 18–20 sides/year. Now I'm projecting 30+. The appointments feel like warm referrals, not cold outreach. Best ROI I've had in marketing."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">LG</div>
+                        <div><p class="font-bold text-white text-sm">Lauren G.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-             </div>
-             <!-- Duplicate 1 -->
-             <div class="flex gap-6 shrink-0">
-                <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“I was skeptical at first because I’d tried lead gen services before that just sent me tire-kickers. These guys are different. In the first full month we closed 3 extra transactions that I 100% attribute to their appointments, two single-family and one duplex. That added roughly $28k to my GCI for the month. The leads actually pick up, show up, and are pre-qualified. Night and day from what I was getting on my own.”</p>
-                    <div><p class="font-bold text-white text-base">Brandon H.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+            </div>
+            <!-- SET 2 (duplicate for seamless loop) -->
+            <div class="flex gap-6 shrink-0">
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"I was skeptical at first because I'd tried lead gen services before that just sent me tire-kickers. These guys are different. In the first full month we closed 3 extra transactions that I 100% attribute to their appointments, two single-family and one duplex. That added roughly $28k to my GCI for the month. The leads actually pick up, show up, and are pre-qualified. Night and day from what I was getting on my own."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">BH</div>
+                        <div><p class="font-bold text-white text-sm">Brandon H.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“Been with them for 6 months now and it’s been steady. Average 2.5 deals per month that I probably wouldn’t have gotten otherwise. Last quarter alone that was about 80k extra GCI. Appointments are high quality—serious buyers and sellers who already know my name and what I'm about when I get on the phone with them. Saves me so much time chasing dead ends.”</p>
-                    <div><p class="font-bold text-white text-base">Sarah P.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"Been with them for 6 months now and it's been steady. Average 2.5 deals per month that I probably wouldn't have gotten otherwise. Last quarter alone that was about 80k extra GCI. Appointments are high quality—serious buyers and sellers who already know my name and what I'm about when I get on the phone with them. Saves me so much time chasing dead ends."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">SP</div>
+                        <div><p class="font-bold text-white text-sm">Sarah P.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“Before this agency I was lucky to close 1 off-market deal every other month from my own cold calls. Now it’s consistently around 2 per month. February was my best: 3 closings, $32k GCI bump. I'm only talking to people who are interested. Worth every penny.”</p>
-                    <div><p class="font-bold text-white text-base">Mike D.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"Before this agency I was lucky to close 1 off-market deal every other month from my own cold calls. Now it's consistently around 2 per month. February was my best: 3 closings, $32k GCI bump. I'm only talking to people who are interested. Worth every penny."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">MD</div>
+                        <div><p class="font-bold text-white text-sm">Mike D.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“These guys just work. I went from maybe 12–14 closes a year to pushing 35. That’s basically 2 extra deals almost every single month. I'm making an extra 20k with these guys which has completely changed my life. Appointments feel warm, not cold. Realtors, if you’re on the fence, don't be, the team at nexorra are outstanding.”</p>
-                    <div><p class="font-bold text-white text-base">Jessica R.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"These guys just work. I went from maybe 12–14 closes a year to pushing 35. That's basically 2 extra deals almost every single month. I'm making an extra 20k with these guys which has completely changed my life. Appointments feel warm, not cold. Realtors, if you're on the fence, don't be, the team at nexorra are outstanding."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">JR</div>
+                        <div><p class="font-bold text-white text-sm">Jessica R.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“The Nexorra team are amazing. They don’t blast me with 50 junk appointments. I've had about 2–3 closes monthly for the past four months straight with them and made over $100k so far. Game changer for a solo agent like me.”</p>
-                    <div><p class="font-bold text-white text-base">Tom B.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"The Nexorra team are amazing. They don't blast me with 50 junk appointments. I've had about 2–3 closes monthly for the past four months straight with them and made over $100k so far. Game changer for a solo agent like me."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">TB</div>
+                        <div><p class="font-bold text-white text-sm">Tom B.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“I was burned out doing my own prospecting. Handed it off and immediately saw results. First 90 days: 7 additional transactions, roughly $68k in extra GCI. The appointments are so much better! People actually expecting my call, not surprised. I’m back to enjoying the listing and buyer side instead of living on the phone.”</p>
-                    <div><p class="font-bold text-white text-base">Michael S.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"I was burned out doing my own prospecting. Handed it off and immediately saw results. First 90 days: 7 additional transactions, roughly $68k in extra GCI. The appointments are so much better! People actually expecting my call, not surprised. I'm back to enjoying the listing and buyer side instead of living on the phone."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">MS</div>
+                        <div><p class="font-bold text-white text-sm">Michael S.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“Short and sweet: 2 deals in month 1, 3 in month 2, 2 in month 3. Averaging right around $23k extra GCI per month. The quality is amazing, so I haven't had to deal with on no-shows or price shoppers. Best outsourcing decision I’ve made in 8 years as a realtor.”</p>
-                    <div><p class="font-bold text-white text-base">Jennifer L.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"Short and sweet: 2 deals in month 1, 3 in month 2, 2 in month 3. Averaging right around $23k extra GCI per month. The quality is amazing, so I haven't had to deal with on no-shows or price shoppers. Best outsourcing decision I've made in 8 years as a realtor."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">JL</div>
+                        <div><p class="font-bold text-white text-sm">Jennifer L.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“As a team leader, I was hesitant to add another expense. But the math works. Our team average went from 4–5 sides/month to 7–8 thanks to their consistent flow. That’s ~$25k–50k additional GCI monthly for the team. Appointments come in scripted, polite, and prepped. Clients feel taken care of from the first call.”</p>
-                    <div><p class="font-bold text-white text-base">David R.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"As a team leader, I was hesitant to add another expense. But the math works. Our team average went from 4–5 sides/month to 7–8 thanks to their consistent flow. That's ~$25k–50k additional GCI monthly for the team. Appointments come in scripted, polite, and prepped. Clients feel taken care of from the first call."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">DR</div>
+                        <div><p class="font-bold text-white text-sm">David R.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“In the frist 2 months we closed 3 from their appointments. $41k GCI spike. Month 3 was another 2. Now it’s just part of my business engine. The quality is what keeps me working with them.”</p>
-                    <div><p class="font-bold text-white text-base">Sarah K.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"In the frist 2 months we closed 3 from their appointments. $41k GCI spike. Month 3 was another 2. Now it's just part of my business engine. The quality is what keeps me working with them."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">SK</div>
+                        <div><p class="font-bold text-white text-sm">Sarah K.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“Went from struggling to get 1–2 decent seller appointments a month to having 3–4 legit listing opportunities weekly. Closed 9 extra in the first 5 months (that's 90k added in GCI). What I love most is the predictability. I can plan my weeks around real meetings, not hope.”</p>
-                    <div><p class="font-bold text-white text-base">Robert M.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"Went from struggling to get 1–2 decent seller appointments a month to having 3–4 legit listing opportunities weekly. Closed 9 extra in the first 5 months (that's 90k added in GCI). What I love most is the predictability. I can plan my weeks around real meetings, not hope."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">RM</div>
+                        <div><p class="font-bold text-white text-sm">Robert M.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“They’ve been setting for me since last spring. Conservative numbers: 2.1 extra deals per month average. At my commission split that’s been adding $18–22k/month to personal production. Appointments are professional and the no-show rate is under 10%. Huge relief after years of flaky leads.”</p>
-                    <div><p class="font-bold text-white text-base">Emily T.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"They've been setting for me since last spring. Conservative numbers: 2.1 extra deals per month average. At my commission split that's been adding $18–22k/month to personal production. Appointments are professional and the no-show rate is under 10%. Huge relief after years of flaky leads."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">ET</div>
+                        <div><p class="font-bold text-white text-sm">Emily T.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“I tell everyone about this service. My before: maybe 10–12 transactions/year. After: on pace for 24–26 this year. The extra 10–12 sides are almost all from their qualified appointments. That’s well over $100k in additional GCI. They make me look good because the prospects are already warmed up.”</p>
-                    <div><p class="font-bold text-white text-base">James P.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"I tell everyone about this service. My before: maybe 10–12 transactions/year. After: on pace for 24–26 this year. The extra 10–12 sides are almost all from their qualified appointments. That's well over $100k in additional GCI. They make me look good because the prospects are already warmed up."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">JP</div>
+                        <div><p class="font-bold text-white text-sm">James P.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“I've been working with the team at Nexorra for 6 weeks now and I've closed 3 deals from their bookings. All luxury buyers, $38k GCI just from those. The detail they capture (motivation, timeline, budget) makes my job easy.”</p>
-                    <div><p class="font-bold text-white text-base">Ashley B.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"I've been working with the team at Nexorra for 6 weeks now and I've closed 3 deals from their bookings. All luxury buyers, $38k GCI just from those. The detail they capture (motivation, timeline, budget) makes my job easy."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">AB</div>
+                        <div><p class="font-bold text-white text-sm">Ashley B.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“I'm a busy guy, since I started working with Nexorra I stopped wasting time on Zillow leads and cold calls. Now I get 10–15 quality sits a month, close about 20%. That’s shaking out to 2–3 deals monthly, adding $20k–30k GCI consistently. Appointments show up prepared and serious. Highly recommend if you hate prospecting.”</p>
-                    <div><p class="font-bold text-white text-base">Christopher H.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"I'm a busy guy, since I started working with Nexorra I stopped wasting time on Zillow leads and cold calls. Now I get 10–15 quality sits a month, close about 20%. That's shaking out to 2–3 deals monthly, adding $20k–30k GCI consistently. Appointments show up prepared and serious. Highly recommend if you hate prospecting."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">CH</div>
+                        <div><p class="font-bold text-white text-sm">Christopher H.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-                 <div class="w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all">
-                    <div class="flex text-yellow-400 text-sm mb-4">★★★★★</div>
-                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">“Six-month update: 14 extra transactions directly from their appointment setting. Average commission around $9,800 so that’s ~$137k added to my business. Before them I was stuck at 18–20 sides/year. Now I’m projecting 30+. The appointments feel like warm referrals, not cold outreach. Best ROI I’ve had in marketing.”</p>
-                    <div><p class="font-bold text-white text-base">Lauren G.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-1">Real Estate Professional</p></div>
+
+                <div class="quote-mark w-[450px] bg-white/5 p-8 rounded-2xl border border-white/10 border-l-2 border-l-blue-500/40 flex-shrink-0 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] transition-all">
+                    <div class="flex text-amber-400 text-base mb-4 tracking-wider">★★★★★</div>
+                    <p class="text-slate-300 text-sm italic mb-6 leading-relaxed">"Six-month update: 14 extra transactions directly from their appointment setting. Average commission around $9,800 so that's ~$137k added to my business. Before them I was stuck at 18–20 sides/year. Now I'm projecting 30+. The appointments feel like warm referrals, not cold outreach. Best ROI I've had in marketing."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">LG</div>
+                        <div><p class="font-bold text-white text-sm">Lauren G.</p><p class="text-slate-500 text-xs uppercase tracking-wide mt-0.5">Real Estate Professional</p></div>
+                    </div>
                 </div>
-             </div>
+
+            </div>
         </div>
     </section>
 
-    <!-- IMAGE SCROLL (New Marquee below Text Reviews) -->
+    <!-- ════════════════════════════════════
+         IMAGE SCROLL
+    ════════════════════════════════════ -->
     <section class="py-12 bg-[#0f172a] border-b border-white/5 overflow-hidden">
         <div id="images-loop" class="flex overflow-x-auto no-scrollbar gap-12">
-             <div class="flex gap-12 shrink-0 items-center">
+            <div class="flex gap-12 shrink-0 items-center">
                 <div class="image-marquee-item"><img src="review-pictures/1.jpg" alt="Review 1"></div>
                 <div class="image-marquee-item"><img src="review-pictures/2.jpg" alt="Review 2"></div>
                 <div class="image-marquee-item"><img src="review-pictures/3.jpg" alt="Review 3"></div>
@@ -542,7 +797,7 @@
                 <div class="image-marquee-item"><img src="review-pictures/8.jpg" alt="Review 8"></div>
                 <div class="image-marquee-item"><img src="review-pictures/9.jpg" alt="Review 9"></div>
             </div>
-             <div class="flex gap-12 shrink-0 items-center">
+            <div class="flex gap-12 shrink-0 items-center">
                 <div class="image-marquee-item"><img src="review-pictures/1.jpg" alt="Review 1"></div>
                 <div class="image-marquee-item"><img src="review-pictures/2.jpg" alt="Review 2"></div>
                 <div class="image-marquee-item"><img src="review-pictures/3.jpg" alt="Review 3"></div>
@@ -556,22 +811,29 @@
         </div>
     </section>
 
-    <!-- ABOUT US & TEAM (Light to Dark Flow) -->
-    <section id="about" class="py-32 bg-flow-light-to-dark border-t border-white/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Team Grid (Updated: Single Profile for Patrick) -->
-            <div class="flex flex-col justify-center items-center">
-                <div class="flex flex-col md:flex-row items-center gap-12 bg-white/5 p-8 rounded-3xl border border-white/10 max-w-4xl w-full">
-                    <!-- Profile Picture (Resized to w-40, ~40% smaller than w-64) -->
-                    <div class="w-40 h-40 flex-shrink-0 rounded-full overflow-hidden border-4 border-white/10 shadow-lg relative group">
-                        <img src="patrick.jpg" alt="Patrick Frazer" class="w-full h-full object-cover">
+    <!-- ════════════════════════════════════
+         ABOUT
+    ════════════════════════════════════ -->
+    <section id="about" class="py-32 bg-flow-light-to-dark border-t border-white/10 relative">
+        <!-- Subtle dot-grid background -->
+        <div class="absolute inset-0 dot-grid-bg opacity-[0.06] pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col justify-center items-center reveal">
+                <div class="flex flex-col md:flex-row items-center gap-12 card-glow bg-white/5 p-8 rounded-3xl border border-white/10 max-w-4xl w-full">
+
+                    <!-- Animated profile ring -->
+                    <div class="profile-ring-wrap flex-shrink-0">
+                        <div class="profile-ring-spin"></div>
+                        <div class="profile-ring-inner">
+                            <img src="patrick.jpg" alt="Patrick Frazer" class="w-full h-full object-cover">
+                        </div>
                     </div>
-                    
-                    <!-- Bio Content -->
+
+                    <!-- Bio -->
                     <div class="text-left">
                         <h3 class="text-3xl font-bold text-white mb-2">Patrick F.</h3>
                         <p class="text-blue-400 font-semibold text-lg mb-6 uppercase tracking-wide">CEO & Ex-Real Estate Agent</p>
-                        
+
                         <div class="space-y-4 text-slate-300 leading-relaxed font-light">
                             <p>Hi, I'm Patrick. In 2003 I started up my real estate business, learning from my father. I was fortunate enough to be passed on most of his old clients and so I had a great starting point. But after several years, I realized that I couldn't rely on referrals forever if I wanted to build a business that I could scale.</p>
                             <p>So I began testing different ways to book myself appointments automatically without cold calling or door knocking.</p>
@@ -587,141 +849,188 @@
         </div>
     </section>
 
-    <!-- FAQ SECTION -->
+    <!-- ════════════════════════════════════
+         FAQ
+    ════════════════════════════════════ -->
     <section id="faq" class="py-24 bg-nexorraBg border-t border-white/5">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
+            <div class="text-center mb-16 reveal">
                 <h2 class="text-3xl md:text-4xl font-display font-bold text-white">Frequently Asked Questions</h2>
             </div>
-            
-            <div class="space-y-4">
-                <!-- FAQ Item 1 -->
-                <details class="group py-4 border-b border-white/10 cursor-pointer">
-                    <summary class="flex justify-between items-center font-medium text-white text-lg">
-                        <span>How much does this system cost?</span>
-                        <span class="transition-transform group-open:rotate-180">
-                            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </span>
-                    </summary>
-                    <p class="text-slate-400 mt-4 leading-relaxed">Pricing depends on what you're doing now and the goals you have for your business. We have different pricing systems so it all comes down to what works best for you. We work off a performance guarantee so if we don't deliver based on our agreement you will be fully refunded.</p>
-                </details>
 
-                <!-- FAQ Item 2 -->
-                <details class="group py-4 border-b border-white/10 cursor-pointer">
-                    <summary class="flex justify-between items-center font-medium text-white text-lg">
-                        <span>What makes your service different?</span>
-                        <span class="transition-transform group-open:rotate-180">
-                            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </span>
-                    </summary>
-                    <p class="text-slate-400 mt-4 leading-relaxed">We handle everything in house, tracking every metric to achieve the best possible results for our clients. Which is how we're able to guarantee <span class="font-bold text-white">closed deals</span> rather than promising leads or appointments like other companies.</p>
-                </details>
+            <div class="space-y-2 reveal reveal-delay-1">
 
-                <!-- FAQ Item 3 -->
-                <details class="group py-4 border-b border-white/10 cursor-pointer">
-                    <summary class="flex justify-between items-center font-medium text-white text-lg">
-                        <span>Do you only work with real estate agents?</span>
-                        <span class="transition-transform group-open:rotate-180">
-                            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </span>
-                    </summary>
-                    <p class="text-slate-400 mt-4 leading-relaxed">Yes. We specialize in appointment setting for real estate agents in the US and Canada.</p>
-                </details>
+                <!-- FAQ 1 -->
+                <div class="faq-item rounded-xl cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="faq-trigger flex justify-between items-center py-5 pr-2">
+                        <div class="flex items-center gap-4">
+                            <span class="text-blue-500/50 text-xs font-bold tracking-widest font-display">01</span>
+                            <span class="font-semibold text-white text-lg">How much does this system cost?</span>
+                        </div>
+                        <svg class="faq-chevron w-5 h-5 text-blue-400 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="faq-content">
+                        <p class="text-slate-400 pb-5 leading-relaxed text-sm">Pricing depends on what you're doing now and the goals you have for your business. We have different pricing systems so it all comes down to what works best for you. We work off a performance guarantee so if we don't deliver based on our agreement you will be fully refunded.</p>
+                    </div>
+                    <div class="h-px bg-white/6 mx-0"></div>
+                </div>
 
-                <!-- FAQ Item 4 -->
-                <details class="group py-4 border-b border-white/10 cursor-pointer">
-                    <summary class="flex justify-between items-center font-medium text-white text-lg">
-                        <span>What's included in your service?</span>
-                        <span class="transition-transform group-open:rotate-180">
-                            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </span>
-                    </summary>
-                    <p class="text-slate-400 mt-4 leading-relaxed">We offer fully done-for-you appointment setting which includes lead generation, automated qualification through calling, texting and emailing, daily AI tracking and reports; fully automated nurturing campaigns which keep you top of mind for over 2 years along with many more systems.</p>
-                </details>
+                <!-- FAQ 2 -->
+                <div class="faq-item rounded-xl cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="faq-trigger flex justify-between items-center py-5 pr-2">
+                        <div class="flex items-center gap-4">
+                            <span class="text-blue-500/50 text-xs font-bold tracking-widest font-display">02</span>
+                            <span class="font-semibold text-white text-lg">What makes your service different?</span>
+                        </div>
+                        <svg class="faq-chevron w-5 h-5 text-blue-400 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="faq-content">
+                        <p class="text-slate-400 pb-5 leading-relaxed text-sm">We handle everything in house, tracking every metric to achieve the best possible results for our clients. Which is how we're able to guarantee <span class="font-bold text-white">closed deals</span> rather than promising leads or appointments like other companies.</p>
+                    </div>
+                    <div class="h-px bg-white/6 mx-0"></div>
+                </div>
 
-                <!-- FAQ Item 5 -->
-                <details class="group py-4 border-b border-white/10 cursor-pointer">
-                    <summary class="flex justify-between items-center font-medium text-white text-lg">
-                        <span>How quickly can I expect results?</span>
-                        <span class="transition-transform group-open:rotate-180">
-                            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </span>
-                    </summary>
-                    <p class="text-slate-400 mt-4 leading-relaxed">On average our clients start seeing good appointment volume within the first 2 weeks and close their first deal in the first 6 weeks. But the fastest deal closed by a client was closed 20 days into working with us.</p>
-                </details>
+                <!-- FAQ 3 -->
+                <div class="faq-item rounded-xl cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="faq-trigger flex justify-between items-center py-5 pr-2">
+                        <div class="flex items-center gap-4">
+                            <span class="text-blue-500/50 text-xs font-bold tracking-widest font-display">03</span>
+                            <span class="font-semibold text-white text-lg">Do you only work with real estate agents?</span>
+                        </div>
+                        <svg class="faq-chevron w-5 h-5 text-blue-400 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="faq-content">
+                        <p class="text-slate-400 pb-5 leading-relaxed text-sm">Yes. We specialize in appointment setting for real estate agents in the US and Canada.</p>
+                    </div>
+                    <div class="h-px bg-white/6 mx-0"></div>
+                </div>
 
-                <!-- FAQ Item 6 -->
-                <details class="group py-4 border-b border-white/10 cursor-pointer">
-                    <summary class="flex justify-between items-center font-medium text-white text-lg">
-                        <span>Is there a minimum commitment?</span>
-                        <span class="transition-transform group-open:rotate-180">
-                            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </span>
-                    </summary>
-                    <p class="text-slate-400 mt-4 leading-relaxed">We work on a month to month basis which allows you to cancel any time.</p>
-                </details>
+                <!-- FAQ 4 -->
+                <div class="faq-item rounded-xl cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="faq-trigger flex justify-between items-center py-5 pr-2">
+                        <div class="flex items-center gap-4">
+                            <span class="text-blue-500/50 text-xs font-bold tracking-widest font-display">04</span>
+                            <span class="font-semibold text-white text-lg">What's included in your service?</span>
+                        </div>
+                        <svg class="faq-chevron w-5 h-5 text-blue-400 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="faq-content">
+                        <p class="text-slate-400 pb-5 leading-relaxed text-sm">We offer fully done-for-you appointment setting which includes lead generation, automated qualification through calling, texting and emailing, daily AI tracking and reports; fully automated nurturing campaigns which keep you top of mind for over 2 years along with many more systems.</p>
+                    </div>
+                    <div class="h-px bg-white/6 mx-0"></div>
+                </div>
 
-                <!-- FAQ Item 7 -->
-                <details class="group py-4 border-b border-white/10 cursor-pointer">
-                    <summary class="flex justify-between items-center font-medium text-white text-lg">
-                        <span>How does the guarantee work?</span>
-                        <span class="transition-transform group-open:rotate-180">
-                            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </span>
-                    </summary>
-                    <p class="text-slate-400 mt-4 leading-relaxed">We guarantee closed deals within a given time period, if we don't deliver as per our agreement we would refund you everything.</p>
-                </details>
+                <!-- FAQ 5 -->
+                <div class="faq-item rounded-xl cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="faq-trigger flex justify-between items-center py-5 pr-2">
+                        <div class="flex items-center gap-4">
+                            <span class="text-blue-500/50 text-xs font-bold tracking-widest font-display">05</span>
+                            <span class="font-semibold text-white text-lg">How quickly can I expect results?</span>
+                        </div>
+                        <svg class="faq-chevron w-5 h-5 text-blue-400 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="faq-content">
+                        <p class="text-slate-400 pb-5 leading-relaxed text-sm">On average our clients start seeing good appointment volume within the first 2 weeks and close their first deal in the first 6 weeks. But the fastest deal closed by a client was closed 20 days into working with us.</p>
+                    </div>
+                    <div class="h-px bg-white/6 mx-0"></div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="faq-item rounded-xl cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="faq-trigger flex justify-between items-center py-5 pr-2">
+                        <div class="flex items-center gap-4">
+                            <span class="text-blue-500/50 text-xs font-bold tracking-widest font-display">06</span>
+                            <span class="font-semibold text-white text-lg">Is there a minimum commitment?</span>
+                        </div>
+                        <svg class="faq-chevron w-5 h-5 text-blue-400 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="faq-content">
+                        <p class="text-slate-400 pb-5 leading-relaxed text-sm">We work on a month to month basis which allows you to cancel any time.</p>
+                    </div>
+                    <div class="h-px bg-white/6 mx-0"></div>
+                </div>
+
+                <!-- FAQ 7 -->
+                <div class="faq-item rounded-xl cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="faq-trigger flex justify-between items-center py-5 pr-2">
+                        <div class="flex items-center gap-4">
+                            <span class="text-blue-500/50 text-xs font-bold tracking-widest font-display">07</span>
+                            <span class="font-semibold text-white text-lg">How does the guarantee work?</span>
+                        </div>
+                        <svg class="faq-chevron w-5 h-5 text-blue-400 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="faq-content">
+                        <p class="text-slate-400 pb-5 leading-relaxed text-sm">We guarantee closed deals within a given time period, if we don't deliver as per our agreement we would refund you everything.</p>
+                    </div>
+                    <div class="h-px bg-white/6 mx-0"></div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- CONTACT FORM (Deep Dark - Updated Embed) -->
-    <section id="contact" class="py-32 bg-nexorraBg border-t border-white/5">
-        <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="mb-12">
+    <!-- ════════════════════════════════════
+         CONTACT
+    ════════════════════════════════════ -->
+    <section id="contact" class="py-32 bg-nexorraBg border-t border-white/5 relative overflow-hidden">
+        <!-- Background accent -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-blue-600/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="mb-12 reveal">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full badge-glow text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+                    Ready to Scale
+                </div>
                 <h2 class="text-4xl font-display font-bold text-white mb-4">Start Scaling</h2>
                 <p class="text-slate-400">Book a time below to automate your growth.</p>
             </div>
-            
-            <!-- Calendly Inline Widget -->
+
             <iframe
-            src="https://calendly.com/nexorra/demo-call?embed_domain=yourdomain.com&embed_type=Inline&hide_gdpr_banner=1"
-            width="100%"
-            height="960"
-            frameborder="0"
-            style="background:transparent;"
-            title="Select a Date & Time">
+                src="https://calendly.com/nexorra/demo-call?embed_domain=yourdomain.com&embed_type=Inline&hide_gdpr_banner=1"
+                width="100%"
+                height="960"
+                frameborder="0"
+                style="background:transparent;"
+                title="Select a Date & Time">
             </iframe>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="bg-black text-white border-t border-white/10 pt-16 pb-8">
+    <!-- ════════════════════════════════════
+         FOOTER
+    ════════════════════════════════════ -->
+    <footer class="bg-black text-white border-t border-white/8 pt-14 pb-8">
+        <div class="footer-top-bar -mt-14 mb-14"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <a href="#" class="inline-flex items-center gap-2 mb-8 group">
-                <span style="font-family: 'Times New Roman', Times, serif; font-style: italic;" class="font-bold text-3xl tracking-tight text-white group-hover:text-blue-400 transition-colors">Nexorra</span>
+                <span style="font-family: 'Times New Roman', Times, serif; font-style: italic;" class="font-bold text-3xl tracking-tight text-white group-hover:text-blue-400 transition-colors duration-300">Nexorra</span>
             </a>
-            
-            <div class="flex justify-center space-x-8 mb-12 text-slate-400 text-sm font-medium">
-                <a href="#services" class="hover:text-white transition-colors">Services</a>
-                <a href="#testimonials" class="hover:text-white transition-colors">Testimonials</a>
-                <a href="#about" class="hover:text-white transition-colors">About</a>
-                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+
+            <div class="flex justify-center space-x-8 mb-12 text-slate-500 text-sm font-medium">
+                <a href="#services"     class="hover:text-white transition-colors duration-200">Services</a>
+                <a href="#testimonials" class="hover:text-white transition-colors duration-200">Testimonials</a>
+                <a href="#about"        class="hover:text-white transition-colors duration-200">About</a>
+                <a href="#contact"      class="hover:text-white transition-colors duration-200">Contact</a>
             </div>
 
             <div class="border-t border-white/5 pt-8 text-slate-600 text-xs">
-                <p>&copy; 2024 Nexorra. All rights reserved. <a href="terms.html" class="hover:text-white transition-colors ml-4">Terms of Purchase</a></p>
+                <p>&copy; 2024 Nexorra. All rights reserved.
+                    <a href="terms.html" class="hover:text-slate-300 transition-colors ml-4 underline underline-offset-2 decoration-white/10">Terms of Purchase</a>
+                </p>
             </div>
         </div>
     </footer>
-    
-    <!-- Scripts for Scrollers -->
+
+    <!-- ════════════════════════════════════
+         SCRIPTS — Marquee Scrollers
+    ════════════════════════════════════ -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const scrollers = [
                 { id: 'brokerage-loop', speed: 1.0 },
-                { id: 'reviews-loop', speed: 0.4 },
-                { id: 'images-loop', speed: 0.25 }
+                { id: 'reviews-loop',   speed: 0.4 },
+                { id: 'images-loop',    speed: 0.25 }
             ];
 
             scrollers.forEach(config => {
@@ -729,36 +1038,105 @@
                 if (!container) return;
 
                 let isPaused = false;
-                
-                container.addEventListener('mouseenter', () => isPaused = true);
-                container.addEventListener('mouseleave', () => isPaused = false);
-                container.addEventListener('touchstart', () => isPaused = true, {passive: true});
-                container.addEventListener('touchend', () => setTimeout(() => isPaused = false, 1000));
+                container.addEventListener('mouseenter',  () => isPaused = true);
+                container.addEventListener('mouseleave',  () => isPaused = false);
+                container.addEventListener('touchstart',  () => isPaused = true,  { passive: true });
+                container.addEventListener('touchend',    () => setTimeout(() => isPaused = false, 1000));
 
                 let lastTimestamp = 0;
-                
                 function animate(timestamp) {
                     if (!lastTimestamp) lastTimestamp = timestamp;
                     const delta = timestamp - lastTimestamp;
                     lastTimestamp = timestamp;
 
-                    const maxScroll = container.scrollWidth / 3; // Approx 1 set if we duplicated 3 times
-                    
+                    const maxScroll = container.scrollWidth / 3;
                     if (container.scrollLeft >= maxScroll * 2) {
-                        // Reset to first set position to avoid jump
                         container.scrollLeft -= maxScroll;
-                    } 
-
-                    if (!isPaused) {
-                        container.scrollLeft += config.speed * (delta / 16); 
                     }
-                    
+                    if (!isPaused) {
+                        container.scrollLeft += config.speed * (delta / 16);
+                    }
                     requestAnimationFrame(animate);
                 }
-                
                 requestAnimationFrame(animate);
             });
         });
+    </script>
+
+    <!-- ════════════════════════════════════
+         SCRIPTS — Reveal + Counters + FAQ
+    ════════════════════════════════════ -->
+    <script>
+        // ── Scroll Reveal ──────────────────────────────────────────
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // ── Animated Counters ──────────────────────────────────────
+        let countersStarted = false;
+
+        function formatCount(val, prefix, suffix) {
+            if (val >= 1000) {
+                return prefix + val.toLocaleString() + suffix;
+            }
+            return prefix + val + suffix;
+        }
+
+        function animateCounter(el) {
+            const target  = parseInt(el.dataset.target, 10);
+            const prefix  = el.dataset.prefix  || '';
+            const suffix  = el.dataset.suffix  || '';
+            const duration = 1600;
+            const startTime = performance.now();
+
+            function tick(now) {
+                const elapsed  = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease out cubic
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(eased * target);
+                el.textContent = formatCount(current, prefix, suffix);
+                if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+
+        const statsSection = document.querySelector('.stat-divider')?.closest('section');
+        if (statsSection) {
+            const statsObserver = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !countersStarted) {
+                    countersStarted = true;
+                    document.querySelectorAll('.counter').forEach(animateCounter);
+                    statsObserver.disconnect();
+                }
+            }, { threshold: 0.4 });
+            statsObserver.observe(statsSection);
+        }
+
+        // ── FAQ Accordion ──────────────────────────────────────────
+        function toggleFaq(item) {
+            const content   = item.querySelector('.faq-content');
+            const isOpen    = item.classList.contains('open');
+
+            // Close all open items
+            document.querySelectorAll('.faq-item.open').forEach(openItem => {
+                openItem.classList.remove('open');
+                openItem.querySelector('.faq-content').classList.remove('open');
+            });
+
+            // Open clicked item if it was closed
+            if (!isOpen) {
+                item.classList.add('open');
+                content.classList.add('open');
+            }
+        }
     </script>
 </body>
 </html>
